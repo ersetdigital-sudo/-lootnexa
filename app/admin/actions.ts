@@ -113,7 +113,7 @@ export async function updateQrisImage(url: string) {
   const supabase = await createSupabaseServerClient();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { error } = await (supabase.from("settings") as any)
-    .upsert({ key: "qris_image_url", value: url }, { onConflict: "key" });
+    .upsert({ key: "qris_image_url", value: url, updated_at: new Date().toISOString() }, { onConflict: "key" });
   if (error) throw error.message;
   revalidatePath("/admin/qris");
   revalidatePath("/admin");

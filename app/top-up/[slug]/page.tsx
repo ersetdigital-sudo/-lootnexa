@@ -34,7 +34,9 @@ export default async function TopUpPage({ params }: PageProps) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const { data } = await (supabase.from("settings") as any)
       .select("value").eq("key", "qris_image_url").single();
-    if (data?.value && typeof data.value === "string") qrisUrl = data.value;
+    if (data?.value) {
+      qrisUrl = typeof data.value === "string" ? data.value : String(data.value);
+    }
   } catch {}
 
   const TILE_COLORS: Record<string, string> = {
