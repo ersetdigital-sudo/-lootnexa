@@ -49,6 +49,7 @@ export default function Home() {
             <span>LOOT<span className="accent">NEXA</span></span>
           </Link>
           <nav className="hidden md:flex items-center gap-8">
+            <Link href="/" className="text-[14.5px] text-ink font-semibold transition-colors">Home</Link>
             <Link href="/game" className="text-[14.5px] text-grey hover:text-ink transition-colors">Game</Link>
             <Link href="/#cara" className="text-[14.5px] text-grey hover:text-ink transition-colors">Cara Top Up</Link>
             <Link href="/#aman" className="text-[14.5px] text-grey hover:text-ink transition-colors">Keamanan</Link>
