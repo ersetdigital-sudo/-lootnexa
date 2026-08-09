@@ -291,7 +291,7 @@ export default function Home() {
           </div>
           <hr className="my-8 border-white/[0.08]" />
           <div className="flex flex-col md:flex-row gap-3 justify-between text-[13px]" style={{ color: "#9a9aa4" }}>
-            <p>© 2026 LOOTNEXA — lootnexa.net</p>
+            <p>© 2026 LOOTNEXA. All rights reserved.</p>
             <p className="max-w-[50ch]">Nama game dan mata uang dalam game adalah milik publisher masing-masing. LOOTNEXA tidak berafiliasi dengan publisher mana pun.</p>
           </div>
         </div>

@@ -75,7 +75,7 @@ export default function GamePage() {
 
       <footer className="bg-ink">
         <div className="wrap py-10">
-          <p className="text-[13px] text-center" style={{ color: "#9a9aa4" }}>© 2026 LOOTNEXA — lootnexa.net</p>
+          <p className="text-[13px] text-center" style={{ color: "#9a9aa4" }}>© 2026 LOOTNEXA. All rights reserved.</p>
         </div>
       </footer>
     </>
