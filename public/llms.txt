@@ -1,0 +1,31 @@
+# LOOTNEXA
+
+## About
+LOOTNEXA adalah platform top up game untuk gamer Indonesia. Pilih game, masukkan User ID, pilih nominal, bayar.
+
+## Games Available
+- Mobile Legends (Diamond)
+- Free Fire (Diamond)
+- PUBG Mobile (UC)
+- Call of Duty: Mobile (CP)
+- Magic Chess: Go Go (Diamond & Pass)
+
+## How It Works
+1. Pilih game yang ingin di-top-up
+2. Masukkan User ID (dan Zone ID untuk Mobile Legends & Magic Chess Go Go)
+3. Pilih nominal
+4. Bayar lewat QRIS
+
+## Payment Methods
+- QRIS (GoPay, DANA, OVO, ShopeePay, m-banking)
+- Tanpa biaya layanan tambahan
+
+## Security
+- Tidak meminta password akun game
+- Tidak meminta OTP atau PIN
+- Cukup User ID saja
+- Proses otomatis 24 jam
+
+## Contact
+- Website: https://lootnexa.net
+- Email: lootnexa@gmail.com

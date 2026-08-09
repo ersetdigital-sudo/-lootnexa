@@ -54,8 +54,51 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": `${site.url}/#org`,
+        name: site.name,
+        url: site.url,
+        description: site.description,
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${site.url}/#site`,
+        url: site.url,
+        name: site.name,
+        inLanguage: "id-ID",
+        publisher: { "@id": `${site.url}/#org` },
+      },
+      {
+        "@type": "ItemList",
+        name: "Game yang tersedia di LOOTNEXA",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Top Up Mobile Legends", url: `${site.url}/top-up/mobile-legends` },
+          { "@type": "ListItem", position: 2, name: "Top Up Free Fire", url: `${site.url}/top-up/free-fire` },
+          { "@type": "ListItem", position: 3, name: "Top Up PUBG Mobile", url: `${site.url}/top-up/pubg-mobile` },
+          { "@type": "ListItem", position: 4, name: "Top Up Call of Duty: Mobile", url: `${site.url}/top-up/call-of-duty-mobile` },
+          { "@type": "ListItem", position: 5, name: "Top Up Magic Chess: Go Go", url: `${site.url}/top-up/magic-chess-go-go` },
+        ],
+      },
+      {
+        "@type": "FAQPage",
+        mainEntity: [
+          { "@type": "Question", name: "Bagaimana cara top up game di LOOTNEXA?", acceptedAnswer: { "@type": "Answer", text: "Pilih game, masukkan User ID (dan Zone ID bila diperlukan), pilih nominal, lalu lanjutkan ke pembayaran." } },
+          { "@type": "Question", name: "Apakah top up membutuhkan password?", acceptedAnswer: { "@type": "Answer", text: "Tidak. LOOTNEXA tidak meminta password, OTP, PIN, maupun akses login ke akun game." } },
+          { "@type": "Question", name: "Game apa saja yang tersedia di LOOTNEXA?", acceptedAnswer: { "@type": "Answer", text: "Mobile Legends, Free Fire, PUBG Mobile, Call of Duty Mobile, dan Magic Chess Go Go." } },
+        ],
+      },
+    ],
+  };
+
   return (
     <html lang="id" className={`${dmSans.variable} ${manrope.variable} h-full antialiased`}>
+      <head>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      </head>
       <body className="min-h-full flex flex-col">
         <meta name="theme-color" content={site.themeColor} />
         {children}

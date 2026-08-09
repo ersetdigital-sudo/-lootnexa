@@ -246,49 +246,53 @@ export default function Home() {
 
         {/* CTA */}
         <section className="bg-ink">
-          <div className="wrap py-20 md:py-28 grid gap-8 md:grid-cols-[1fr_auto] md:items-center">
+          <div className="wrap py-16 md:py-24">
             <h2 className="d2 max-w-[14ch]">Siap Top Up Sekarang?</h2>
-            <div className="flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-wrap gap-3">
               <Link href="/game" className="btn btn-primary">Top Up Sekarang</Link>
-              <Link href="/game" className="btn btn-line cta-btn-line">Lihat Game</Link>
+              <Link href="/game" className="btn border border-white/20 text-paper bg-transparent hover:border-white/40 hover:text-white transition">Lihat Game</Link>
             </div>
           </div>
         </section>
       </main>
 
       {/* FOOTER */}
-      <footer className="bg-ink">
-        <div className="wrap py-16">
-          <div className="grid gap-10 md:grid-cols-[1.2fr_1fr_1fr]">
+      <footer className="bg-ink border-t border-white/[0.08]">
+        <div className="wrap py-12 md:py-16">
+          <div className="grid gap-8 md:grid-cols-[1.2fr_1fr_1fr]">
             <div>
-              <Link href="/" className="flex items-center gap-[9px] font-display font-extrabold tracking-[-.02em] text-[18px]">
-                {LOOTNEXA_LOGO}
+              <Link href="/" className="inline-flex items-center gap-[9px] font-display font-extrabold tracking-[-.02em] text-[18px] text-paper">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <rect x="1.2" y="1.2" width="21.6" height="21.6" rx="6.4" stroke="white" strokeWidth="1.7" />
+                  <path d="M8 6.6v10.8h7.4" stroke="white" strokeWidth="2.4" strokeLinecap="square" />
+                  <circle cx="16.2" cy="8.4" r="1.9" fill="#ff5b26" />
+                </svg>
                 <span>LOOT<span className="accent">NEXA</span></span>
               </Link>
-              <p className="sub text-[14.5px] mt-4 max-w-[34ch]" style={{ color: "#9a9aa4" }}>Platform top up game untuk gamer Indonesia. Lima judul, satu alur, tanpa password.</p>
+              <p className="text-[14.5px] mt-4 max-w-[34ch]" style={{ color: "#9a9aa4" }}>Platform top up game untuk gamer Indonesia. Lima judul, satu alur, tanpa password.</p>
             </div>
             <div>
-              <p className="label" style={{ color: "#9a9aa4" }}>Game</p>
-              <div className="mt-4 grid gap-2 text-[14.5px]">
+              <p className="font-display font-bold text-[13px] uppercase tracking-wider" style={{ color: "#9a9aa4" }}>Game</p>
+              <div className="mt-4 grid gap-2.5 text-[14.5px]">
                 {GAMES.map((g) => (
-                  <Link key={g.slug} href={`/top-up/${g.slug}`} className="sub hover:text-paper" style={{ color: "#9a9aa4" }}>{g.name}</Link>
+                  <Link key={g.slug} href={`/top-up/${g.slug}`} className="hover:text-white transition" style={{ color: "#9a9aa4" }}>{g.name}</Link>
                 ))}
               </div>
             </div>
             <div>
-              <p className="label" style={{ color: "#9a9aa4" }}>Halaman</p>
-              <div className="mt-4 grid gap-2 text-[14.5px]">
-                <Link href="/game" className="sub hover:text-paper" style={{ color: "#9a9aa4" }}>Semua Game</Link>
-                <Link href="/#cara" className="sub hover:text-paper" style={{ color: "#9a9aa4" }}>Cara Top Up</Link>
-                <Link href="/#aman" className="sub hover:text-paper" style={{ color: "#9a9aa4" }}>Keamanan</Link>
-                <Link href="/#faq" className="sub hover:text-paper" style={{ color: "#9a9aa4" }}>FAQ</Link>
+              <p className="font-display font-bold text-[13px] uppercase tracking-wider" style={{ color: "#9a9aa4" }}>Halaman</p>
+              <div className="mt-4 grid gap-2.5 text-[14.5px]">
+                <Link href="/game" className="hover:text-white transition" style={{ color: "#9a9aa4" }}>Semua Game</Link>
+                <Link href="/#cara" className="hover:text-white transition" style={{ color: "#9a9aa4" }}>Cara Top Up</Link>
+                <Link href="/#aman" className="hover:text-white transition" style={{ color: "#9a9aa4" }}>Keamanan</Link>
+                <Link href="/#faq" className="hover:text-white transition" style={{ color: "#9a9aa4" }}>FAQ</Link>
               </div>
             </div>
           </div>
-          <hr className="rule my-10" style={{ background: "#26262b" }} />
-          <div className="flex flex-col md:flex-row gap-3 justify-between text-[13px] sub" style={{ color: "#9a9aa4" }}>
+          <hr className="my-8 border-white/[0.08]" />
+          <div className="flex flex-col md:flex-row gap-3 justify-between text-[13px]" style={{ color: "#9a9aa4" }}>
             <p>© 2026 LOOTNEXA — lootnexa.net</p>
-            <p>Nama game dan mata uang dalam game adalah milik publisher masing-masing. LOOTNEXA tidak berafiliasi dengan publisher mana pun.</p>
+            <p className="max-w-[50ch]">Nama game dan mata uang dalam game adalah milik publisher masing-masing. LOOTNEXA tidak berafiliasi dengan publisher mana pun.</p>
           </div>
         </div>
       </footer>
