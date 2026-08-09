@@ -19,6 +19,10 @@ export interface Game {
   hint: string;
   server: boolean;
   serverLabel?: string;
+  user_id_label?: string;
+  user_id_placeholder?: string;
+  server_id_label?: string;
+  server_id_placeholder?: string;
   nominals: Nominal[];
   passes?: Nominal[];
 }
@@ -40,6 +44,8 @@ export const GAMES: Game[] = [
     hint: "User ID dan Zone ID ada di menu profil dalam game.",
     server: true,
     serverLabel: "Zone ID",
+    user_id_label: "User ID",
+    user_id_placeholder: "12345678",
     nominals: [
       { label: "5 Diamond", price: 1500 },
       { label: "12 Diamond", price: 3400 },
@@ -67,6 +73,8 @@ export const GAMES: Game[] = [
     copy: "Top up Diamond Free Fire ke User ID kamu, tanpa login akun.",
     hint: "User ID Free Fire ada di halaman profil akunmu.",
     server: false,
+    user_id_label: "User ID",
+    user_id_placeholder: "12345678",
     nominals: [
       { label: "5 Diamond", price: 1500 },
       { label: "12 Diamond", price: 2900 },
@@ -92,6 +100,8 @@ export const GAMES: Game[] = [
     copy: "Top up UC PUBG Mobile ke User ID kamu, tanpa login akun.",
     hint: "Character ID PUBG Mobile ada di menu profil.",
     server: false,
+    user_id_label: "User ID",
+    user_id_placeholder: "12345678",
     nominals: [
       { label: "60 UC", price: 15000 },
       { label: "120 UC", price: 29000 },
@@ -118,6 +128,8 @@ export const GAMES: Game[] = [
     copy: "Top up CP Call of Duty: Mobile ke User ID kamu, tanpa login akun.",
     hint: "Open ID / Player ID COD Mobile ada di menu profil dalam game.",
     server: false,
+    user_id_label: "User ID",
+    user_id_placeholder: "12345678",
     nominals: [
       { label: "53 CP", price: 11000 },
       { label: "106 CP", price: 21000 },
@@ -146,6 +158,8 @@ export const GAMES: Game[] = [
     hint: "User ID dan Zone ID ada di menu profil dalam game.",
     server: true,
     serverLabel: "Zone ID",
+    user_id_label: "User ID",
+    user_id_placeholder: "12345678",
     nominals: [
       { label: "16 Diamond", price: 4500 },
       { label: "32 Diamond", price: 8500 },

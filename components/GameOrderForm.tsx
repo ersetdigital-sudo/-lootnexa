@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { rupiah } from "@/lib/format";
 import { CheckoutOverlay } from "@/components/CheckoutOverlay";
 import type { Game } from "@/lib/games";
 

@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { drawDemoQR } from "@/lib/qr";
+import { rupiah } from "@/lib/format";
 
 export interface CheckoutOrder {
   game: string;
