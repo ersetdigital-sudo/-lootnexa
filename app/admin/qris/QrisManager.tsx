@@ -33,9 +33,9 @@ export function QrisManager({ currentUrl }: QrisManagerProps) {
 
       try {
         await updateQrisImage(result.secure_url);
-        showToast("success", "QRIS berhasil diupdate dan disimpan.");
-      } catch (saveErr: unknown) {
-        showToast("error", "Gambar terupload tapi gagal disimpan: " + (saveErr instanceof Error ? saveErr.message : String(saveErr)));
+        showToast("success", "QRIS berhasil diupdate.");
+      } catch {
+        showToast("error", "Gagal simpan ke database.");
       }
     } catch (e: unknown) {
       showToast("error", "Gagal upload: " + (e instanceof Error ? e.message : String(e)));
