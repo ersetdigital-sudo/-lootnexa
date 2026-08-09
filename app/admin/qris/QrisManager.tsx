@@ -32,10 +32,14 @@ export function QrisManager({ currentUrl }: QrisManagerProps) {
       setPreview(result.secure_url);
 
       try {
-        await updateQrisImage(result.secure_url);
-        showToast("success", "QRIS berhasil diupdate.");
-      } catch {
-        showToast("error", "Gagal simpan ke database.");
+        const saveResult = await updateQrisImage(result.secure_url);
+        if (saveResult?.error) {
+          showToast("error", "Gagal simpan: " + saveResult.error);
+        } else {
+          showToast("success", "QRIS berhasil diupdate.");
+        }
+      } catch (e: unknown) {
+        showToast("error", "Gagal simpan: " + (e instanceof Error ? e.message : String(e)));
       }
     } catch (e: unknown) {
       showToast("error", "Gagal upload: " + (e instanceof Error ? e.message : String(e)));

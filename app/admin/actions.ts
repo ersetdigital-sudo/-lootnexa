@@ -112,23 +112,27 @@ export async function updateGameActive(gameId: string, isActive: boolean) {
 export async function updateQrisImage(url: string) {
   const supabase = await createSupabaseServerClient();
   
-  // Try to update first
+  // First try to update existing row
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { error: updateError } = await (supabase.from("settings") as any)
     .update({ value: url, updated_at: new Date().toISOString() })
     .eq("key", "qris_image_url");
   
-  // If no row updated, insert new one
-  if (updateError || true) {
+  // If update affected 0 rows, insert new row
+  if (updateError) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    await (supabase.from("settings") as any)
-      .insert({ key: "qris_image_url", value: url, updated_at: new Date().toISOString() })
-      .select();
+    const { error: insertError } = await (supabase.from("settings") as any)
+      .insert({ key: "qris_image_url", value: url, updated_at: new Date().toISOString() });
+    
+    if (insertError) {
+      return { error: insertError.message };
+    }
   }
   
   revalidatePath("/admin/qris");
   revalidatePath("/admin");
   revalidatePath("/");
+  return { error: null };
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
