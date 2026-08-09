@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { getGame } from "@/lib/games";
 import { GameOrderForm } from "@/components/GameOrderForm";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
@@ -39,14 +40,6 @@ export default async function TopUpPage({ params }: PageProps) {
     }
   } catch {}
 
-  const TILE_COLORS: Record<string, string> = {
-    "mobile-legends": "#1d2b6b",
-    "free-fire": "#8a2b17",
-    "pubg-mobile": "#6b5310",
-    "call-of-duty-mobile": "#2b2f36",
-    "magic-chess-go-go": "#3d2b63",
-  };
-
   return (
     <>
       <header className="sticky top-0 z-[60] border-b border-line bg-paper/90 backdrop-blur-[saturate(1.6)_blur(8px)]">
@@ -81,8 +74,8 @@ export default async function TopUpPage({ params }: PageProps) {
             </nav>
 
             <div className="flex flex-wrap items-center gap-5">
-              <div className="tile" style={{ background: TILE_COLORS[game.slug], width: 80, height: 80, fontSize: 16 }}>
-                {game.name.split(":")[0].trim()}
+              <div className="w-20 h-20 rounded-2xl flex items-center justify-center overflow-hidden border border-line bg-white">
+                <Image src={game.logo} alt={game.name} width={60} height={60} className="object-contain w-[60px] h-[60px]" />
               </div>
               <div>
                 <p className="text-[12px] uppercase tracking-[.2em] accent">{game.name}</p>
