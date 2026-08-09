@@ -103,8 +103,8 @@ export default function Home() {
                     <span className="label">Paling dicari</span>
                     <span className="label">{featured.cur}</span>
                   </div>
-                  <div className="tile mt-7 overflow-hidden" style={{ background: TILE_COLORS[featured.slug], height: 190 }}>
-                    <Image src={featured.logo} alt={featured.name} width={featured.logoWidth} height={featured.logoHeight} className="object-contain w-auto h-[120px]" />
+                  <div className="tile mt-7 overflow-hidden rounded-xl" style={{ background: TILE_COLORS[featured.slug], height: 190 }}>
+                    <Image src={featured.logo} alt={featured.name} width={140} height={140} className="object-contain w-[140px] h-[140px]" />
                   </div>
                   <h3 className="d3 mt-8">{featured.name}</h3>
                   <p className="sub mt-3 text-[15.5px] max-w-[36ch]">Top up Diamond Mobile Legends dikirim ke User ID dan Zone ID yang kamu masukkan, tanpa login akun.</p>
@@ -116,8 +116,8 @@ export default function Home() {
               <div className="grid gap-4 content-start">
                 {others.map((g) => (
                   <Link key={g.slug} href={`/top-up/${g.slug}`} className="card gcard p-4 sm:p-5 flex items-center gap-4">
-                    <div className="tile shrink-0 overflow-hidden" style={{ background: TILE_COLORS[g.slug], width: 78, height: 60 }}>
-                      <Image src={g.logo} alt={g.name} width={50} height={50} className="object-contain w-[50px] h-[50px]" />
+                    <div className="shrink-0 w-[78px] h-[60px] rounded-xl flex items-center justify-center overflow-hidden" style={{ background: TILE_COLORS[g.slug] }}>
+                      <Image src={g.logo} alt={g.name} width={48} height={48} className="object-contain w-[48px] h-[48px]" />
                     </div>
                     <div className="min-w-0 flex-1">
                       <h3 className="font-extrabold text-[16.5px] tracking-tight">{g.name}</h3>
