@@ -98,12 +98,16 @@ export function CheckoutOverlay({ order, onClose }: CheckoutOverlayProps) {
             <div className="mt-5 qr-frame">
               <div className="flex items-center gap-2 self-start"><span className="font-display text-[13px] font-bold tracking-tight text-[#0b0b0c]">QRIS</span><span className="text-[9px] text-[#0b0b0c]/50 uppercase tracking-[.18em]">LOOTNEXA</span></div>
               {order.qrisUrl ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={order.qrisUrl} alt="QRIS LOOTNEXA" width={190} height={190} style={{ width: "min(58vw, 190px)", height: "auto", borderRadius: 6, objectFit: "contain" }} />
+                <div className="flex justify-center">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={order.qrisUrl} alt="QRIS LOOTNEXA" width={190} height={190} style={{ width: "min(58vw, 190px)", height: "auto", borderRadius: 6, objectFit: "contain" }} />
+                </div>
               ) : (
-                <canvas ref={canvasRef} width={180} height={180} style={{ width: "min(58vw, 190px)", height: "min(58vw, 190px)", imageRendering: "pixelated", borderRadius: 6 }} />
+                <div className="flex justify-center">
+                  <canvas ref={canvasRef} width={180} height={180} style={{ width: "min(58vw, 190px)", height: "min(58vw, 190px)", imageRendering: "pixelated", borderRadius: 6 }} />
+                </div>
               )}
-              <p className="text-[10px] text-[#0b0b0c]/55 pb-1">Satu QR untuk semua e-wallet &amp; m-banking</p>
+              <p className="text-[10px] text-[#0b0b0c]/55 pb-1 text-center">Satu QR untuk semua e-wallet &amp; m-banking</p>
             </div>
 
             <div className="mt-5 space-y-2.5 text-sm text-left">
