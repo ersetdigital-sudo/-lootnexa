@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { GAMES } from "@/lib/games";
 
 const LOOTNEXA_LOGO = (
@@ -73,9 +74,9 @@ export default function Home() {
             <h1 className="d1 mt-5 max-w-[15ch]">Top Up Game<br />Cepat &amp; Aman.</h1>
             <div className="mt-7 grid gap-6 md:grid-cols-[1fr_auto] md:items-end">
               <p className="sub text-[17.5px] max-w-[46ch]">Top up Mobile Legends, Free Fire, PUBG Mobile, COD Mobile, dan Magic Chess Go Go. Pilih game, masukkan User ID, pilih nominal, lalu bayar.</p>
-              <div className="flex flex-wrap gap-3">
-                <Link href="/game" className="btn btn-primary">Top Up Sekarang</Link>
-                <Link href="/game" className="btn border border-white/20 text-paper bg-transparent hover:border-white/40 hover:text-white transition">Lihat Game</Link>
+              <div className="flex gap-3">
+                <Link href="/game" className="btn btn-primary flex-1 md:flex-none text-center">Top Up Sekarang</Link>
+                <Link href="/game" className="btn border border-white/20 text-paper bg-transparent hover:border-white/40 hover:text-white transition flex-1 md:flex-none text-center">Lihat Game</Link>
               </div>
             </div>
             <div className="trust">
@@ -102,8 +103,8 @@ export default function Home() {
                     <span className="label">Paling dicari</span>
                     <span className="label">{featured.cur}</span>
                   </div>
-                  <div className="tile mt-7" style={{ background: TILE_COLORS[featured.slug], height: 190, fontSize: 34 }}>
-                    {featured.name}
+                  <div className="tile mt-7 overflow-hidden" style={{ background: TILE_COLORS[featured.slug], height: 190 }}>
+                    <Image src={featured.logo} alt={featured.name} width={featured.logoWidth} height={featured.logoHeight} className="object-contain w-auto h-[120px]" />
                   </div>
                   <h3 className="d3 mt-8">{featured.name}</h3>
                   <p className="sub mt-3 text-[15.5px] max-w-[36ch]">Top up Diamond Mobile Legends dikirim ke User ID dan Zone ID yang kamu masukkan, tanpa login akun.</p>
@@ -115,8 +116,8 @@ export default function Home() {
               <div className="grid gap-4 content-start">
                 {others.map((g) => (
                   <Link key={g.slug} href={`/top-up/${g.slug}`} className="card gcard p-4 sm:p-5 flex items-center gap-4">
-                    <div className="tile shrink-0" style={{ background: TILE_COLORS[g.slug], width: 78, height: 60, fontSize: 11, textAlign: "center", padding: "0 6px", lineHeight: 1.25 }}>
-                      {g.name.split(":")[0].trim()}
+                    <div className="tile shrink-0 overflow-hidden" style={{ background: TILE_COLORS[g.slug], width: 78, height: 60 }}>
+                      <Image src={g.logo} alt={g.name} width={50} height={50} className="object-contain w-[50px] h-[50px]" />
                     </div>
                     <div className="min-w-0 flex-1">
                       <h3 className="font-extrabold text-[16.5px] tracking-tight">{g.name}</h3>
