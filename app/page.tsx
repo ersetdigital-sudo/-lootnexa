@@ -253,7 +253,7 @@ export default function Home() {
                 </svg>
                 <span>LOOT<span className="accent">NEXA</span></span>
               </Link>
-              <p className="text-[14.5px] mt-4 max-w-[34ch]" style={{ color: "#9a9aa4" }}>Platform top up game untuk gamer Indonesia. Lima judul, satu alur, tanpa password.</p>
+              <p className="text-[14.5px] mt-4 max-w-[34ch]" style={{ color: "#9a9aa4" }}>Top up game cepat, aman, dan simpel untuk gamer Indonesia.</p>
             </div>
             <div>
               <p className="font-display font-bold text-[13px] uppercase tracking-wider" style={{ color: "#9a9aa4" }}>Game</p>
