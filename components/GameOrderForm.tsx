@@ -98,7 +98,7 @@ export function GameOrderForm({ game, qrisUrl }: GameOrderFormProps) {
                 }`}
               >
                 <p className="font-display text-[13px] sm:text-[14.5px] font-bold">{n.label}</p>
-                <p className="mt-0.5 text-[11px] sm:text-[12.5px] text-grey">{rpiah(n.price)}</p>
+                <p className="mt-0.5 text-[11px] sm:text-[12.5px] text-grey">{rupiah(n.price)}</p>
               </button>
             ))}
           </div>
@@ -143,14 +143,14 @@ export function GameOrderForm({ game, qrisUrl }: GameOrderFormProps) {
           <div className="flex justify-between gap-4"><dt className="text-grey">{game.user_id_label}</dt><dd className="font-medium text-ink/70">{userId || "—"}</dd></div>
           {game.server && <div className="flex justify-between gap-4"><dt className="text-grey">{game.serverLabel}</dt><dd className="font-medium text-ink/70">{serverId || "—"}</dd></div>}
           <div className="flex justify-between gap-4"><dt className="text-grey">Nominal</dt><dd className="font-medium text-ink/70">{current?.label || "—"}</dd></div>
-          <div className="flex justify-between gap-4"><dt className="text-grey">Harga</dt><dd className="font-medium text-ink/70">{current ? rpiah(current.price) : "—"}</dd></div>
+          <div className="flex justify-between gap-4"><dt className="text-grey">Harga</dt><dd className="font-medium text-ink/70">{current ? rupiah(current.price) : "—"}</dd></div>
           <div className="flex justify-between gap-4"><dt className="text-grey">Biaya layanan</dt><dd className="font-medium text-ink/70">Rp0</dd></div>
           <div className="flex justify-between gap-4"><dt className="text-grey">Pembayaran</dt><dd className="font-medium text-ink/70">QRIS</dd></div>
         </dl>
         <div className="h-px bg-line my-5" />
         <div className="flex items-end justify-between">
           <p className="text-[13px] text-grey">Total pembayaran</p>
-          <p className="font-display text-[26px] font-extrabold">{current ? rpiah(current.price) : "Rp0"}</p>
+          <p className="font-display text-[26px] font-extrabold">{current ? rupiah(current.price) : "Rp0"}</p>
         </div>
         <button
           type="button"

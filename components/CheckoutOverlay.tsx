@@ -109,9 +109,9 @@ export function CheckoutOverlay({ order, onClose }: CheckoutOverlayProps) {
             <div className="mt-5 space-y-2.5 text-sm text-left">
               <div className="flex justify-between"><span className="text-grey">Game</span><span className="font-medium">{order.game}</span></div>
               <div className="flex justify-between"><span className="text-grey">User ID</span><span className="font-medium">{order.userId}</span></div>
-              <div className="flex justify-between"><span className="text-grey">Paket</span><span className="font-medium">{order.nominalLabel} · {rpiah(order.price)}</span></div>
+              <div className="flex justify-between"><span className="text-grey">Paket</span><span className="font-medium">{order.nominalLabel} · {rupiah(order.price)}</span></div>
               <div className="flex justify-between"><span className="text-grey">Order ID</span><span className="text-grey text-xs font-mono">{order.orderId}</span></div>
-              <div className="border-t border-line pt-3 flex justify-between items-center"><span className="text-grey">Total</span><span className="font-display text-xl font-bold accent">{rpiah(order.total)}</span></div>
+              <div className="border-t border-line pt-3 flex justify-between items-center"><span className="text-grey">Total</span><span className="font-display text-xl font-bold accent">{rupiah(order.total)}</span></div>
             </div>
 
             <button type="button" onClick={handlePaid} className="btn btn-primary w-full mt-5">Saya Sudah Bayar</button>
@@ -131,7 +131,7 @@ export function CheckoutOverlay({ order, onClose }: CheckoutOverlayProps) {
               <div className="flex justify-between"><span className="text-grey">Game</span><span className="font-medium">{order.game}</span></div>
               <div className="flex justify-between"><span className="text-grey">User ID</span><span className="font-medium">{order.userId}</span></div>
               <div className="flex justify-between"><span className="text-grey">Paket</span><span className="font-medium">{order.nominalLabel}</span></div>
-              <div className="border-t border-line pt-2.5 flex justify-between"><span className="text-grey">Dibayar</span><span className="accent font-display font-bold">{rpiah(order.total)}</span></div>
+              <div className="border-t border-line pt-2.5 flex justify-between"><span className="text-grey">Dibayar</span><span className="accent font-display font-bold">{rupiah(order.total)}</span></div>
             </div>
             <div className="mt-5 flex items-center justify-center gap-2 text-xs text-[#39e5b6]"><span className="pulse-dot" /> {deliverMsg}</div>
             <button type="button" onClick={onClose} className="btn btn-primary w-full mt-5">Selesai</button>
