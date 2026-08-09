@@ -238,16 +238,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* CTA */}
-        <section className="bg-ink">
-          <div className="wrap py-16 md:py-24">
-            <h2 className="d2 max-w-[14ch]">Siap Top Up Sekarang?</h2>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link href="/game" className="btn btn-primary">Top Up Sekarang</Link>
-              <Link href="/game" className="btn border border-white/20 text-paper bg-transparent hover:border-white/40 hover:text-white transition">Lihat Game</Link>
-            </div>
-          </div>
-        </section>
       </main>
 
       {/* FOOTER */}
