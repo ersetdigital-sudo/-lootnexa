@@ -116,27 +116,24 @@ export default async function TopUpPage({ params }: PageProps) {
             </div>
             <div>
               <h2 className="font-display text-[24px] font-extrabold sm:text-[32px]">FAQ {game.name}</h2>
-              <div className="mt-6 space-y-3">
-                <details className="faq card rounded-2xl px-5">
-                  <summary className="cursor-pointer list-none flex items-center justify-between gap-4 py-4">
-                    <h3 className="font-display text-[14.5px] font-semibold sm:text-[15.5px]">Berapa lama proses top up {game.name}?</h3>
-                    <span className="shrink-0 text-grey">+</span>
+              <div className="mt-6">
+                <details className="faq border-b border-line">
+                  <summary className="cursor-pointer list-none flex items-center justify-between gap-4 py-5 font-display font-bold text-[15px] sm:text-[16px]">
+                    Berapa lama proses top up {game.name}?
                   </summary>
-                  <p className="pb-5 pr-8 text-[13.5px] leading-relaxed sub">Setelah pembayaran QRIS terkonfirmasi, {game.cur} diteruskan otomatis dan umumnya masuk ke akun dalam beberapa detik.</p>
+                  <p className="pb-6 text-[14px] leading-relaxed text-grey">Setelah pembayaran QRIS terkonfirmasi, {game.cur} diteruskan otomatis dan umumnya masuk ke akun dalam beberapa detik.</p>
                 </details>
-                <details className="faq card rounded-2xl px-5">
-                  <summary className="cursor-pointer list-none flex items-center justify-between gap-4 py-4">
-                    <h3 className="font-display text-[14.5px] font-semibold sm:text-[15.5px]">Data apa yang dibutuhkan untuk top up {game.name}?</h3>
-                    <span className="shrink-0 text-grey">+</span>
+                <details className="faq border-b border-line">
+                  <summary className="cursor-pointer list-none flex items-center justify-between gap-4 py-5 font-display font-bold text-[15px] sm:text-[16px]">
+                    Data apa yang dibutuhkan untuk top up {game.name}?
                   </summary>
-                  <p className="pb-5 pr-8 text-[13.5px] leading-relaxed sub">Cukup {game.user_id_label}{game.server ? ` dan ${game.serverLabel}` : ""}. LOOTNEXA tidak pernah meminta password, OTP, atau akses login akun game.</p>
+                  <p className="pb-6 text-[14px] leading-relaxed text-grey">Cukup {game.user_id_label}{game.server ? ` dan ${game.serverLabel}` : ""}. LOOTNEXA tidak pernah meminta password, OTP, atau akses login akun game.</p>
                 </details>
-                <details className="faq card rounded-2xl px-5">
-                  <summary className="cursor-pointer list-none flex items-center justify-between gap-4 py-4">
-                    <h3 className="font-display text-[14.5px] font-semibold sm:text-[15.5px]">Bagaimana cara membayar?</h3>
-                    <span className="shrink-0 text-grey">+</span>
+                <details className="faq border-b border-line">
+                  <summary className="cursor-pointer list-none flex items-center justify-between gap-4 py-5 font-display font-bold text-[15px] sm:text-[16px]">
+                    Bagaimana cara membayar?
                   </summary>
-                  <p className="pb-5 pr-8 text-[13.5px] leading-relaxed sub">Pembayaran memakai QRIS, yang bisa dibayar dari hampir semua e-wallet dan m-banking di Indonesia.</p>
+                  <p className="pb-6 text-[14px] leading-relaxed text-grey">Pembayaran memakai QRIS, yang bisa dibayar dari hampir semua e-wallet dan m-banking di Indonesia.</p>
                 </details>
               </div>
             </div>
