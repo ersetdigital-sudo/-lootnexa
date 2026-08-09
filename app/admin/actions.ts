@@ -112,21 +112,26 @@ export async function updateGameActive(gameId: string, isActive: boolean) {
 export async function updateQrisImage(url: string) {
   const supabase = await createSupabaseServerClient();
   
-  // First try to update existing row
+  // Check if row exists
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { error: updateError } = await (supabase.from("settings") as any)
-    .update({ value: url, updated_at: new Date().toISOString() })
-    .eq("key", "qris_image_url");
+  const { data: existing } = await (supabase.from("settings") as any)
+    .select("key")
+    .eq("key", "qris_image_url")
+    .single();
   
-  // If update affected 0 rows, insert new row
-  if (updateError) {
+  if (existing) {
+    // Update existing row
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { error: insertError } = await (supabase.from("settings") as any)
-      .insert({ key: "qris_image_url", value: url, updated_at: new Date().toISOString() });
-    
-    if (insertError) {
-      return { error: insertError.message };
-    }
+    const { error } = await (supabase.from("settings") as any)
+      .update({ value: url })
+      .eq("key", "qris_image_url");
+    if (error) return { error: error.message };
+  } else {
+    // Insert new row
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { error } = await (supabase.from("settings") as any)
+      .insert({ key: "qris_image_url", value: url });
+    if (error) return { error: error.message };
   }
   
   revalidatePath("/admin/qris");

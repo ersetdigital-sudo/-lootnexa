@@ -12,10 +12,12 @@ export default async function AdminQrisPage() {
       .eq("key", "qris_image_url")
       .single();
 
-    if (setting?.value) {
-      currentUrl = typeof setting.value === "string" ? setting.value : String(setting.value);
+    if (setting && setting.value) {
+      currentUrl = String(setting.value);
     }
-  } catch {}
+  } catch (e) {
+    console.error("QRIS fetch error:", e);
+  }
 
   return (
     <div>
