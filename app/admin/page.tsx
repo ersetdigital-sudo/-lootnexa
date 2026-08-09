@@ -41,12 +41,13 @@ export default async function AdminDashboard() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const { count: ag } = await (supabase.from("games") as any).select("*", { count: "exact", head: true }).eq("is_active", true);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data: qrisRows } = await (supabase.from("settings") as any).select("value").eq("key", "qris_image_url") as { data: Array<{ value: string }> | null };
+    const { data: qrisRows } = await (supabase.from("settings") as any).select("value").eq("key", "qris_image_url");
 
     gamesCount = gc ?? 0;
     pricingCount = pc ?? 0;
     activeGames = ag ?? 0;
-    qrisValue = qrisRows?.[0]?.value ?? "";
+    const qrisRaw = qrisRows?.[0]?.value;
+    qrisValue = qrisRaw ? (typeof qrisRaw === "string" ? qrisRaw : String(qrisRaw)) : "";
   } catch (e: unknown) {
     const msg = e instanceof Error ? e.message : String(e);
     if (msg.includes("relation") && msg.includes("does not exist")) {

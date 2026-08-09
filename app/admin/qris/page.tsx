@@ -10,9 +10,11 @@ export default async function AdminQrisPage() {
     const { data: setting } = await (supabase.from("settings") as any)
       .select("value")
       .eq("key", "qris_image_url")
-      .single() as { data: { value: string } | null };
+      .single();
 
-    currentUrl = setting?.value ?? "";
+    if (setting?.value) {
+      currentUrl = typeof setting.value === "string" ? setting.value : String(setting.value);
+    }
   } catch {}
 
   return (
