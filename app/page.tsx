@@ -35,14 +35,6 @@ const FAQS = [
   { q: "Game apa saja yang tersedia di LOOTNEXA?", a: "Mobile Legends, Free Fire, PUBG Mobile, Call of Duty Mobile, dan Magic Chess Go Go." },
 ];
 
-const TILE_COLORS: Record<string, string> = {
-  "mobile-legends": "#1d2b6b",
-  "free-fire": "#8a2b17",
-  "pubg-mobile": "#6b5310",
-  "call-of-duty-mobile": "#2b2f36",
-  "magic-chess-go-go": "#3d2b63",
-};
-
 export default function Home() {
   const featured = GAMES[0];
   const others = GAMES.slice(1);
@@ -103,8 +95,8 @@ export default function Home() {
                     <span className="label">Paling dicari</span>
                     <span className="label">{featured.cur}</span>
                   </div>
-                  <div className="tile mt-7 overflow-hidden rounded-xl" style={{ background: TILE_COLORS[featured.slug], height: 190 }}>
-                    <Image src={featured.logo} alt={featured.name} width={140} height={140} className="object-contain w-[140px] h-[140px]" />
+                  <div className="mt-7 flex justify-center rounded-xl overflow-hidden" style={{ height: 190 }}>
+                    <Image src={featured.logo} alt={featured.name} width={140} height={140} className="object-contain w-[140px] h-[140px] self-center" />
                   </div>
                   <h3 className="d3 mt-8">{featured.name}</h3>
                   <p className="sub mt-3 text-[15.5px] max-w-[36ch]">Top up Diamond Mobile Legends dikirim ke User ID dan Zone ID yang kamu masukkan, tanpa login akun.</p>
@@ -116,7 +108,7 @@ export default function Home() {
               <div className="grid gap-4 content-start">
                 {others.map((g) => (
                   <Link key={g.slug} href={`/top-up/${g.slug}`} className="card gcard p-4 sm:p-5 flex items-center gap-4">
-                    <div className="shrink-0 w-[78px] h-[60px] rounded-xl flex items-center justify-center overflow-hidden" style={{ background: TILE_COLORS[g.slug] }}>
+                    <div className="shrink-0 w-[78px] h-[60px] rounded-xl flex items-center justify-center overflow-hidden">
                       <Image src={g.logo} alt={g.name} width={48} height={48} className="object-contain w-[48px] h-[48px]" />
                     </div>
                     <div className="min-w-0 flex-1">
