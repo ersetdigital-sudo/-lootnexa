@@ -75,7 +75,7 @@ export default function Home() {
               <p className="sub text-[17.5px] max-w-[46ch]">Top up Mobile Legends, Free Fire, PUBG Mobile, COD Mobile, dan Magic Chess Go Go. Pilih game, masukkan User ID, pilih nominal, lalu bayar.</p>
               <div className="flex flex-wrap gap-3">
                 <Link href="/game" className="btn btn-primary">Top Up Sekarang</Link>
-                <Link href="/game" className="btn btn-line hero-btn-line">Lihat Game</Link>
+                <Link href="/game" className="btn border border-white/20 text-paper bg-transparent hover:border-white/40 hover:text-white transition">Lihat Game</Link>
               </div>
             </div>
             <div className="trust">
