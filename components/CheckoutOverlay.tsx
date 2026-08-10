@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { drawDemoQR } from "@/lib/qr";
 import { rupiah } from "@/lib/format";
 
@@ -20,18 +21,17 @@ interface CheckoutOverlayProps {
   onClose: () => void;
 }
 
-type Step = "pay" | "done" | "expired";
+type Step = "pay" | "done";
 
 const DURATION = 300;
 const RING_C = 119.4;
 
 export function CheckoutOverlay({ order, onClose }: CheckoutOverlayProps) {
+  const router = useRouter();
   const [step, setStep] = useState<Step>("pay");
   const [secondsLeft, setSecondsLeft] = useState(DURATION);
   const [deliverMsg, setDeliverMsg] = useState("Mengirim item… estimasi < 10 detik");
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-
-  const expire = useCallback(() => setStep("expired"), []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -41,12 +41,18 @@ export function CheckoutOverlay({ order, onClose }: CheckoutOverlayProps) {
   useEffect(() => {
     const timer = window.setInterval(() => {
       setSecondsLeft((prev) => {
-        if (prev <= 1) { window.clearInterval(timer); expire(); return 0; }
+        if (prev <= 1) {
+          window.clearInterval(timer);
+          setStep("done");
+          setDeliverMsg("Mengirim item… estimasi < 10 detik");
+          window.setTimeout(() => setDeliverMsg("Item sedang diproses. Cek game dalam beberapa detik."), 3200);
+          return 0;
+        }
         return prev - 1;
       });
     }, 1000);
     return () => window.clearInterval(timer);
-  }, [expire]);
+  }, []);
 
   useEffect(() => {
     if (step !== "pay") return;
@@ -61,14 +67,6 @@ export function CheckoutOverlay({ order, onClose }: CheckoutOverlayProps) {
       return () => { document.body.style.overflow = ""; };
     }
   }, [step]);
-
-  const handlePaid = () => {
-    setStep("done");
-    setDeliverMsg("Mengirim item… estimasi < 10 detik");
-    window.setTimeout(() => setDeliverMsg("Item sedang diproses. Cek game dalam beberapa detik."), 3200);
-  };
-
-  const handleRetry = () => { setStep("pay"); setSecondsLeft(DURATION); };
 
   const ringOffset = RING_C * (1 - secondsLeft / DURATION);
   const mm = String(Math.floor(secondsLeft / 60)).padStart(2, "0");
@@ -118,7 +116,6 @@ export function CheckoutOverlay({ order, onClose }: CheckoutOverlayProps) {
               <div className="border-t border-line pt-3 flex justify-between items-center"><span className="text-grey">Total</span><span className="font-display text-xl font-bold accent">{rupiah(order.total)}</span></div>
             </div>
 
-            <button type="button" onClick={handlePaid} className="btn btn-primary w-full mt-5">Saya Sudah Bayar</button>
             <button type="button" onClick={onClose} className="w-full text-xs text-grey hover:text-ink transition mt-3">Batalkan pesanan</button>
           </div>
         )}
@@ -138,19 +135,7 @@ export function CheckoutOverlay({ order, onClose }: CheckoutOverlayProps) {
               <div className="border-t border-line pt-2.5 flex justify-between"><span className="text-grey">Dibayar</span><span className="accent font-display font-bold">{rupiah(order.total)}</span></div>
             </div>
             <div className="mt-5 flex items-center justify-center gap-2 text-xs text-[#39e5b6]"><span className="pulse-dot" /> {deliverMsg}</div>
-            <button type="button" onClick={onClose} className="btn btn-primary w-full mt-5">Selesai</button>
-          </div>
-        )}
-
-        {step === "expired" && (
-          <div className="py-2">
-            <div className="mx-auto w-20 h-20 rounded-full flex items-center justify-center border border-line bg-paper">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#9a9aa4" strokeWidth="2" strokeLinecap="round"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg>
-            </div>
-            <h3 className="font-display text-2xl font-bold mt-6">Waktu habis</h3>
-            <p className="text-grey text-sm font-light mt-2">QRIS sudah kedaluwarsa. Buat pesanan baru untuk melanjutkan.</p>
-            <button type="button" onClick={handleRetry} className="btn btn-primary w-full mt-5">Buat QRIS Baru</button>
-            <button type="button" onClick={onClose} className="w-full text-xs text-grey hover:text-ink transition mt-3">Tutup</button>
+            <button type="button" onClick={() => router.push("/")} className="btn btn-primary w-full mt-5">Kembali ke Beranda</button>
           </div>
         )}
       </div>
