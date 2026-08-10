@@ -51,3 +51,11 @@ export async function getQrisUrl(): Promise<string> {
     .select("value").eq("key", "qris_image_url").single() as { data: SettingsRow | null };
   return (data?.value as string) ?? "";
 }
+
+export async function getWaNumber(): Promise<string> {
+  const supabase = await createSupabaseServerClient();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data } = await (supabase.from("settings") as any)
+    .select("value").eq("key", "wa_number").single() as { data: SettingsRow | null };
+  return (data?.value as string) ?? "";
+}

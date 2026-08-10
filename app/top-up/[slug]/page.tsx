@@ -55,6 +55,7 @@ export default async function TopUpPage({ params }: PageProps) {
   const minPrice = usesDb && dbRegular.length > 0 ? Math.min(...dbRegular.map((n) => n.price)) : (game.nominals[0]?.price ?? 0);
 
   let qrisUrl = "";
+  let waNumber = "";
   try {
     const supabase = await createSupabaseServerClient();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -62,6 +63,12 @@ export default async function TopUpPage({ params }: PageProps) {
       .select("value").eq("key", "qris_image_url").single();
     if (data?.value) {
       qrisUrl = typeof data.value === "string" ? data.value : String(data.value);
+    }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: waData } = await (supabase.from("settings") as any)
+      .select("value").eq("key", "wa_number").single();
+    if (waData?.value) {
+      waNumber = typeof waData.value === "string" ? waData.value : String(waData.value);
     }
   } catch {}
 
@@ -122,6 +129,7 @@ export default async function TopUpPage({ params }: PageProps) {
             <GameOrderForm
               game={game}
               qrisUrl={qrisUrl}
+              waNumber={waNumber}
               nominals={usesDb ? dbRegular : undefined}
               passes={usesDb ? dbPasses : undefined}
             />

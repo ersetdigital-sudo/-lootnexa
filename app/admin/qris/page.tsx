@@ -3,6 +3,7 @@ import { QrisManager } from "./QrisManager";
 
 export default async function AdminQrisPage() {
   let currentUrl = "";
+  let waNumber = "";
 
   try {
     const supabase = await createSupabaseServerClient();
@@ -14,6 +15,16 @@ export default async function AdminQrisPage() {
 
     if (setting && setting.value) {
       currentUrl = String(setting.value);
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: waSetting } = await (supabase.from("settings") as any)
+      .select("value")
+      .eq("key", "wa_number")
+      .single();
+
+    if (waSetting && waSetting.value) {
+      waNumber = String(waSetting.value);
     }
   } catch (e) {
     console.error("QRIS fetch error:", e);
@@ -27,7 +38,7 @@ export default async function AdminQrisPage() {
       </div>
 
       <div className="max-w-lg">
-        <QrisManager currentUrl={currentUrl} />
+        <QrisManager currentUrl={currentUrl} waNumber={waNumber} />
       </div>
     </div>
   );

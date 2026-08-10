@@ -9,6 +9,7 @@ import type { DbNominal } from "@/types/game";
 interface GameOrderFormProps {
   game: Game;
   qrisUrl: string;
+  waNumber?: string;
   nominals?: DbNominal[];
   passes?: DbNominal[];
 }
@@ -74,7 +75,7 @@ function PriceButton({
   );
 }
 
-export function GameOrderForm({ game, qrisUrl, nominals, passes }: GameOrderFormProps) {
+export function GameOrderForm({ game, qrisUrl, waNumber, nominals, passes }: GameOrderFormProps) {
   const [userId, setUserId] = useState("");
   const [serverId, setServerId] = useState("");
   const [selected, setSelected] = useState(0);
@@ -268,6 +269,7 @@ export function GameOrderForm({ game, qrisUrl, nominals, passes }: GameOrderForm
             total: current.price,
             orderId,
             qrisUrl,
+            waNumber,
           }}
           onClose={() => setShowCheckout(false)}
         />
