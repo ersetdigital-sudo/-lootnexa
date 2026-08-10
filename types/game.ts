@@ -19,6 +19,8 @@ export interface DbNominal {
   game_id: string;
   nominal_label: string;
   price: number;
+  category: string;
+  badge: string | null;
   sort_order: number;
 }
 

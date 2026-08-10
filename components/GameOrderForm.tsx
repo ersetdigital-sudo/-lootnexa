@@ -4,21 +4,93 @@ import { useState } from "react";
 import { rupiah } from "@/lib/format";
 import { CheckoutOverlay } from "@/components/CheckoutOverlay";
 import type { Game } from "@/lib/games";
+import type { DbNominal } from "@/types/game";
 
 interface GameOrderFormProps {
   game: Game;
   qrisUrl: string;
+  nominals?: DbNominal[];
+  passes?: DbNominal[];
 }
 
-export function GameOrderForm({ game, qrisUrl }: GameOrderFormProps) {
+interface PriceItem {
+  label: string;
+  price: number;
+  badge: string | null;
+}
+
+const BADGE_RIBBONS: Record<string, string> = {
+  terlaris: "bg-amber-400 text-amber-950",
+  best_value: "bg-sky-500 text-white",
+  hemat: "bg-emerald-500 text-white",
+};
+
+const BADGE_LABELS: Record<string, string> = {
+  terlaris: "Terlaris",
+  best_value: "Best Value",
+  hemat: "Hemat",
+};
+
+function PriceButton({
+  item,
+  selected,
+  onClick,
+  compact,
+}: {
+  item: PriceItem;
+  selected: boolean;
+  onClick: () => void;
+  compact?: boolean;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`rounded-xl border bg-white text-left transition overflow-hidden ${
+        selected
+          ? "border-accent bg-accent/10 shadow-[0_0_0_1px_rgba(255,91,38,.6),0_12px_30px_-18px_rgba(255,91,38,.9)]"
+          : "border-line hover:border-accent/50 hover:-translate-y-0.5"
+      } ${compact ? "min-h-[38px]" : "min-h-[44px]"}`}
+    >
+      {item.badge && (
+        <span
+          className={`flex items-center justify-center gap-1 px-2 py-1 text-[9px] font-bold uppercase tracking-[.12em] leading-none ${
+            BADGE_RIBBONS[item.badge] ?? BADGE_RIBBONS.terlaris
+          }`}
+        >
+          {item.badge === "terlaris" && (
+            <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2l2.4 7.2H22l-6 4.6 2.3 7.2-6.3-4.6-6.3 4.6 2.3-7.2-6-4.6h7.6z" />
+            </svg>
+          )}
+          {BADGE_LABELS[item.badge] ?? item.badge}
+        </span>
+      )}
+      <span className={`block ${item.badge ? "px-3 pb-3 pt-2" : "px-3 py-3"}`}>
+        <span className="block font-display text-[13px] sm:text-[14.5px] font-bold">{item.label}</span>
+        <span className="mt-0.5 block text-[11px] sm:text-[12.5px] text-grey">{rupiah(item.price)}</span>
+      </span>
+    </button>
+  );
+}
+
+export function GameOrderForm({ game, qrisUrl, nominals, passes }: GameOrderFormProps) {
   const [userId, setUserId] = useState("");
   const [serverId, setServerId] = useState("");
-  const [selectedNominal, setSelectedNominal] = useState(0);
+  const [selected, setSelected] = useState(0);
   const [showCheckout, setShowCheckout] = useState(false);
   const [orderId, setOrderId] = useState("");
 
-  const nominals = game.nominals || [];
-  const current = nominals[selectedNominal];
+  const listNominals: PriceItem[] = nominals
+    ? nominals.map((n) => ({ label: n.nominal_label, price: n.price, badge: n.badge }))
+    : game.nominals.map((n) => ({ label: n.label, price: n.price, badge: null }));
+  const listPasses: PriceItem[] = passes
+    ? passes.map((n) => ({ label: n.nominal_label, price: n.price, badge: n.badge }))
+    : [];
+  const all = [...listNominals, ...listPasses];
+  const hasPasses = listPasses.length > 0;
+  const current = all[selected];
+  const paymentStep = hasPasses ? "05" : "04";
 
   const handleCheckout = () => {
     if (!userId.trim() || userId.length < 4) return;
@@ -83,32 +155,54 @@ export function GameOrderForm({ game, qrisUrl }: GameOrderFormProps) {
             <h3 className="font-display text-[15px] font-bold">
               <span className="mr-2 accent">03</span>Pilih Nominal
             </h3>
-            <p className="text-[12px] text-grey">{nominals.length} pilihan</p>
+            <p className="text-[12px] text-grey">{listNominals.length} pilihan</p>
           </div>
           <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-3">
-            {nominals.map((n, i) => (
-              <button
+            {listNominals.map((n, i) => (
+              <PriceButton
                 key={i}
-                type="button"
-                onClick={() => setSelectedNominal(i)}
-                className={`rounded-xl border bg-white px-3 py-3 text-left transition min-h-[44px] ${
-                  selectedNominal === i
-                    ? "border-accent bg-accent/10 shadow-[0_0_0_1px_rgba(255,91,38,.6),0_12px_30px_-18px_rgba(255,91,38,.9)]"
-                    : "border-line hover:border-accent/50 hover:-translate-y-0.5"
-                }`}
-              >
-                <p className="font-display text-[13px] sm:text-[14.5px] font-bold">{n.label}</p>
-                <p className="mt-0.5 text-[11px] sm:text-[12.5px] text-grey">{rupiah(n.price)}</p>
-              </button>
+                item={n}
+                selected={selected === i}
+                onClick={() => setSelected(i)}
+              />
             ))}
           </div>
         </div>
+
+        {hasPasses && (
+          <>
+            <div className="h-px bg-line my-7" />
+            <div>
+              <div className="flex items-baseline justify-between gap-4">
+                <h3 className="font-display text-[15px] font-bold">
+                  <span className="mr-2 accent">04</span>Paket Spesial
+                </h3>
+                <p className="text-[12px] text-grey">{listPasses.length} pilihan</p>
+              </div>
+              <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-3">
+                {listPasses.map((n, i) => {
+                  const idx = listNominals.length + i;
+                  return (
+                    <PriceButton
+                      key={i}
+                      item={n}
+                      compact
+                      selected={selected === idx}
+                      onClick={() => setSelected(idx)}
+                    />
+                  );
+                })}
+              </div>
+              <p className="mt-3 text-[12px] text-grey">Paket spesial &amp; pass tersedia sesuai harga terbaik.</p>
+            </div>
+          </>
+        )}
 
         <div className="h-px bg-line my-7" />
 
         <div>
           <h3 className="font-display text-[15px] font-bold">
-            <span className="mr-2 accent">04</span>Metode Pembayaran
+            <span className={`mr-2 accent`}>{paymentStep}</span>Metode Pembayaran
           </h3>
           <div className="mt-4">
             <div className="flex items-center gap-4 rounded-2xl border border-[#39e5b6] bg-[rgba(57,229,182,.08)] px-4 py-4">

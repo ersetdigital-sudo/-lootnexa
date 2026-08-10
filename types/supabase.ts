@@ -33,9 +33,9 @@ export interface Database {
         };
       };
       pricing: {
-        Row: { id: string; game_id: string; nominal_label: string; price: number; sort_order: number; created_at: string; updated_at: string; };
-        Insert: { id?: string; game_id: string; nominal_label: string; price: number; sort_order?: number; created_at?: string; updated_at?: string; };
-        Update: { id?: string; game_id?: string; nominal_label?: string; price?: number; sort_order?: number; created_at?: string; updated_at?: string; };
+        Row: { id: string; game_id: string; nominal_label: string; price: number; category: string; badge: string | null; sort_order: number; created_at: string; updated_at: string; };
+        Insert: { id?: string; game_id: string; nominal_label: string; price: number; category?: string; badge?: string | null; sort_order?: number; created_at?: string; updated_at?: string; };
+        Update: { id?: string; game_id?: string; nominal_label?: string; price?: number; category?: string; badge?: string | null; sort_order?: number; created_at?: string; updated_at?: string; };
       };
       settings: {
         Row: { key: string; value: Json; updated_at: string; };

@@ -4,7 +4,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { getGame } from "@/lib/games";
 import { GameOrderForm } from "@/components/GameOrderForm";
+import { getGameBySlug } from "@/lib/db";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
+import type { DbNominal } from "@/types/game";
 
 function rp(n: number): string {
   return "Rp" + n.toLocaleString("id-ID");
@@ -14,13 +16,28 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
+async function getDbNominals(slug: string): Promise<DbNominal[]> {
+  try {
+    const dbGame = await getGameBySlug(slug);
+    return dbGame?.nominals ?? [];
+  } catch {
+    return [];
+  }
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const game = getGame(slug);
   if (!game) return { title: "Game tidak ditemukan" };
+
+  const dbNominals = await getDbNominals(slug);
+  const regular = dbNominals.filter((n) => n.category !== "pass");
+  const minPrice = regular.length > 0 ? Math.min(...regular.map((n) => n.price)) : null;
+  const info = minPrice != null ? `Mulai ${rp(minPrice)}` : "Pembayaran QRIS";
+
   return {
     title: game.heading,
-    description: `Top up ${game.cur} ${game.name} secara instan di LOOTNEXA. Proses otomatis 24 jam, tanpa login akun, pembayaran QRIS.`,
+    description: `Top up ${game.cur} ${game.name} secara instan di LOOTNEXA. ${info}. Proses otomatis 24 jam, tanpa login akun.`,
   };
 }
 
@@ -28,6 +45,14 @@ export default async function TopUpPage({ params }: PageProps) {
   const { slug } = await params;
   const game = getGame(slug);
   if (!game) notFound();
+
+  const dbNominals = await getDbNominals(slug);
+  const dbRegular = dbNominals.filter((n) => n.category !== "pass");
+  const dbPasses = dbNominals.filter((n) => n.category === "pass");
+  const usesDb = dbNominals.length > 0;
+
+  const regularCount = usesDb ? dbRegular.length : game.nominals.length;
+  const minPrice = usesDb && dbRegular.length > 0 ? Math.min(...dbRegular.map((n) => n.price)) : (game.nominals[0]?.price ?? 0);
 
   let qrisUrl = "";
   try {
@@ -85,8 +110,8 @@ export default async function TopUpPage({ params }: PageProps) {
             </div>
             <p className="mt-5 max-w-2xl text-[15px] leading-relaxed sub">{game.copy}</p>
             <div className="mt-5 flex flex-wrap gap-2 text-[12.5px] sub">
-              <span className="card rounded-full px-3.5 py-1.5">{game.cur} · {game.nominals.length} nominal</span>
-              <span className="card rounded-full px-3.5 py-1.5">Mulai {rp(game.nominals[0]?.price ?? 0)}</span>
+              <span className="card rounded-full px-3.5 py-1.5">{game.cur} · {regularCount} nominal</span>
+              <span className="card rounded-full px-3.5 py-1.5">Mulai {rp(minPrice)}</span>
               <span className="card rounded-full px-3.5 py-1.5">Pembayaran QRIS</span>
             </div>
           </div>
@@ -94,7 +119,12 @@ export default async function TopUpPage({ params }: PageProps) {
 
         <section className="pb-6">
           <div className="wrap">
-            <GameOrderForm game={game} qrisUrl={qrisUrl} />
+            <GameOrderForm
+              game={game}
+              qrisUrl={qrisUrl}
+              nominals={usesDb ? dbRegular : undefined}
+              passes={usesDb ? dbPasses : undefined}
+            />
           </div>
         </section>
 
