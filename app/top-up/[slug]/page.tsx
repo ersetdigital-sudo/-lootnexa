@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import Link from "next/link";
 import Image from "next/image";
 import { getGame } from "@/lib/games";
 import { GameOrderForm } from "@/components/GameOrderForm";
@@ -72,60 +71,95 @@ export default async function TopUpPage({ params }: PageProps) {
     }
   } catch {}
 
+  const statChips = [
+    { label: "Nominal", value: `${regularCount} pilihan`, bg: "#FFEFE6" },
+    { label: "Mulai", value: rp(minPrice), bg: "#FCF7D9" },
+    { label: "Kirim", value: game.range, bg: "#FBE4ED" },
+    { label: "Bayar", value: "QRIS", bg: "#E0F6F8" },
+  ];
+
   return (
     <>
-      <header className="sticky top-0 z-[60] border-b border-line bg-paper/90 backdrop-blur-[saturate(1.6)_blur(8px)]">
-        <div className="wrap nav-inner h-[66px] flex items-center justify-between gap-6">
-          <Link href="/" className="flex items-center gap-[9px] font-display font-extrabold tracking-[-.02em] text-[18px]">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <rect x="1.2" y="1.2" width="21.6" height="21.6" rx="6.4" stroke="currentColor" strokeWidth="1.7" />
-              <path d="M8 6.6v10.8h7.4" stroke="currentColor" strokeWidth="2.4" strokeLinecap="square" />
-              <circle cx="16.2" cy="8.4" r="1.9" fill="#ff5b26" />
-            </svg>
-            <span>LOOT<span className="accent">NEXA</span></span>
-          </Link>
-          <nav className="hidden md:flex items-center gap-8">
-            <Link href="/" className="text-[14.5px] text-grey hover:text-ink transition-colors">Home</Link>
-            <Link href="/game" className="text-[14.5px] text-grey hover:text-ink transition-colors">Game</Link>
-            <Link href="/#cara" className="text-[14.5px] text-grey hover:text-ink transition-colors">Cara Top Up</Link>
-            <Link href="/#aman" className="text-[14.5px] text-grey hover:text-ink transition-colors">Keamanan</Link>
-            <Link href="/#faq" className="text-[14.5px] text-grey hover:text-ink transition-colors">FAQ</Link>
-          </nav>
-          <Link href="/game" className="btn btn-primary btn-sm">Top Up</Link>
+      <header className="sticky top-4 z-[70] px-4">
+        <div className="mx-auto flex max-w-3xl items-center justify-between rounded-full border border-line bg-white/90 px-3 py-2 shadow-sm backdrop-blur-[saturate(1.6)_blur(8px)]">
+          <a href="/game" aria-label="Kembali" className="grid h-10 w-10 place-items-center rounded-full border border-line bg-white text-ink transition hover:text-accent">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6" /></svg>
+          </a>
+          <span className="font-display text-[16px] font-bold text-ink">Details</span>
+          <a href="/game" aria-label="Semua game" className="grid h-10 w-10 place-items-center rounded-full border border-line bg-white text-ink transition hover:text-accent">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2" /><circle cx="12" cy="12" r="2" /><circle cx="19" cy="12" r="2" /></svg>
+          </a>
         </div>
       </header>
 
-      <main className="flex-1">
-        <section className="sec pb-6">
-          <div className="wrap">
-            <nav className="text-[13.5px] text-grey mb-6">
-              <Link href="/" className="hover:text-ink">Home</Link>
-              <span className="mx-1.5">/</span>
-              <Link href="/game" className="hover:text-ink">Game</Link>
-              <span className="mx-1.5">/</span>
-              <span className="text-ink">{game.name}</span>
-            </nav>
-
-            <div className="flex flex-wrap items-center gap-5">
-              <div className="w-20 h-20 rounded-2xl flex items-center justify-center overflow-hidden border border-line bg-white">
-                <Image src={game.logo} alt={game.name} width={60} height={60} className="object-contain w-[60px] h-[60px]" />
-              </div>
-              <div>
-                <p className="text-[12px] uppercase tracking-[.2em] accent">{game.name}</p>
-                <h1 className="font-display mt-2 text-[28px] font-extrabold leading-tight sm:text-[38px]">{game.heading}</h1>
+      <main className="flex-1 pb-44">
+        <section className="relative mt-4 overflow-hidden" style={{ background: "linear-gradient(180deg,#FDF7F2 0%,#FFFFFF 65%)" }}>
+          <div className="relative h-[300px] sm:h-[380px]">
+            <span
+              className="pointer-events-none absolute left-1/2 top-24 -translate-x-1/2 rotate-[-6deg] whitespace-nowrap font-display text-[42px] font-extrabold uppercase tracking-tighter opacity-40 sm:text-[58px]"
+              style={{ WebkitTextStroke: "1px rgba(255,123,46,.3)", color: "transparent" }}
+            >
+              {game.name}
+            </span>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="flex h-44 w-44 items-center justify-center sm:h-52 sm:w-52">
+                <Image
+                  src={game.logo}
+                  alt={game.alt}
+                  width={game.logoWidth}
+                  height={game.logoHeight}
+                  className="h-auto w-auto max-h-full max-w-full object-contain mix-blend-multiply"
+                />
               </div>
             </div>
-            <p className="mt-5 max-w-2xl text-[15px] leading-relaxed sub">{game.copy}</p>
-            <div className="mt-5 flex flex-wrap gap-2 text-[12.5px] sub">
-              <span className="card rounded-full px-3.5 py-1.5">{game.cur} · {regularCount} nominal</span>
-              <span className="card rounded-full px-3.5 py-1.5">Mulai {rp(minPrice)}</span>
-              <span className="card rounded-full px-3.5 py-1.5">Pembayaran QRIS</span>
+            <span className="absolute left-4 top-24 -rotate-8 rounded-full border border-line bg-white/90 px-3 py-1.5 text-[11px] font-bold text-ink shadow-md backdrop-blur sm:left-8">
+              {game.tag ?? "100% Instan"}
+            </span>
+            <span className="absolute bottom-28 right-4 rotate-5 rounded-full border border-line bg-white/90 px-3 py-1.5 text-[12px] font-extrabold text-ink shadow-md backdrop-blur sm:right-8">
+              Mulai {rp(minPrice)}
+            </span>
+          </div>
+          <svg viewBox="0 0 1440 60" preserveAspectRatio="none" className="relative block h-[52px] w-full" style={{ filter: "drop-shadow(0 -4px 8px rgba(0,0,0,.05))" }}>
+            <path d="M0 60h1440V0c-180 34-340 48-520 48-220 0-380-28-620-28-160 0-210 22-300 22z" fill="#FFFFFF" />
+          </svg>
+        </section>
+
+        <section className="relative z-10 -mt-[52px] bg-white px-5 pt-4 sm:px-8">
+          <div className="mx-auto max-w-3xl">
+            <div className="flex items-start justify-between gap-4">
+              <h1 className="font-display text-[22px] font-bold leading-tight text-ink sm:text-[26px]">{game.heading}</h1>
+              <div className="shrink-0 text-right">
+                <p className="text-[12px] font-medium text-grey">Mulai</p>
+                <p className="font-display text-[20px] font-extrabold text-ink">{rp(minPrice)}</p>
+              </div>
+            </div>
+            <p className="mt-2 flex items-center gap-1.5 text-[12px] font-medium text-grey">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" className="text-accent"><path d="M12 2a7 7 0 00-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 00-7-7zm0 9.5A2.5 2.5 0 1112 6.5a2.5 2.5 0 010 5z" /></svg>
+              {game.cur} · {regularCount} nominal · Pembayaran QRIS
+            </p>
+            <p className="mt-4 line-clamp-3 text-[13px] leading-relaxed text-grey">{game.copy}</p>
+            <h2 className="mt-5 text-[15px] font-bold text-ink">Deskripsi</h2>
+            <p className="mt-2 pb-2 text-[13px] leading-relaxed text-grey">
+              {game.copy} {game.hint}
+            </p>
+
+            <div className="mt-6 grid grid-cols-4 gap-2 pb-2">
+              {statChips.map((chip) => (
+                <div
+                  key={chip.label}
+                  className="flex h-[72px] flex-col items-center justify-center gap-1 rounded-2xl px-1 text-center shadow-sm"
+                  style={{ background: chip.bg }}
+                >
+                  <span className="text-[9.5px] font-semibold uppercase tracking-wide" style={{ color: "#7A7A7A" }}>{chip.label}</span>
+                  <span className="w-full truncate font-display text-[11px] font-bold leading-tight text-ink sm:text-[12.5px]">{chip.value}</span>
+                </div>
+              ))}
             </div>
           </div>
         </section>
 
-        <section className="pb-6">
-          <div className="wrap">
+        <section className="mt-2 px-5 sm:px-8">
+          <div className="mx-auto max-w-3xl">
             <GameOrderForm
               game={game}
               qrisUrl={qrisUrl}
@@ -136,12 +170,12 @@ export default async function TopUpPage({ params }: PageProps) {
           </div>
         </section>
 
-        <section className="sec">
-          <div className="wrap grid gap-10 lg:grid-cols-[.8fr_1.2fr]">
+        <section className="mt-12 bg-white px-5 sm:px-8">
+          <div className="mx-auto max-w-3xl grid gap-10 lg:grid-cols-2">
             <div>
-              <h2 className="font-display text-[24px] font-extrabold sm:text-[32px]">Cara Top Up {game.name}</h2>
-              <p className="mt-4 text-[14.5px] leading-relaxed sub">Empat langkah singkat, selesai kurang dari satu menit.</p>
-              <ol className="mt-6 space-y-3 text-[13.5px] sub">
+              <h2 className="font-display text-[24px] font-extrabold text-ink sm:text-[28px]">Cara Top Up {game.name}</h2>
+              <p className="mt-4 text-[14.5px] leading-relaxed text-grey">Empat langkah singkat, selesai kurang dari satu menit.</p>
+              <ol className="mt-6 space-y-3 text-[13.5px] text-grey">
                 <li><span className="font-semibold text-ink">01.</span> Masukkan data akun {game.name} kamu.</li>
                 <li><span className="font-semibold text-ink">02.</span> Pilih nominal {game.cur.split(" / ")[0]} yang diinginkan.</li>
                 <li><span className="font-semibold text-ink">03.</span> Periksa ringkasan pesanan dan totalnya.</li>
@@ -149,22 +183,22 @@ export default async function TopUpPage({ params }: PageProps) {
               </ol>
             </div>
             <div>
-              <h2 className="font-display text-[24px] font-extrabold sm:text-[32px]">FAQ {game.name}</h2>
+              <h2 className="font-display text-[24px] font-extrabold text-ink sm:text-[28px]">FAQ {game.name}</h2>
               <div className="mt-6">
                 <details className="faq border-b border-line">
-                  <summary className="cursor-pointer list-none flex items-center justify-between gap-4 py-5 font-display font-bold text-[15px] sm:text-[16px]">
+                  <summary className="cursor-pointer list-none flex items-center justify-between gap-4 py-5 font-display font-bold text-[15px] text-ink sm:text-[16px]">
                     Berapa lama proses top up {game.name}?
                   </summary>
                   <p className="pb-6 text-[14px] leading-relaxed text-grey">Setelah pembayaran QRIS terkonfirmasi, {game.cur} diteruskan otomatis dan umumnya masuk ke akun dalam beberapa detik.</p>
                 </details>
                 <details className="faq border-b border-line">
-                  <summary className="cursor-pointer list-none flex items-center justify-between gap-4 py-5 font-display font-bold text-[15px] sm:text-[16px]">
+                  <summary className="cursor-pointer list-none flex items-center justify-between gap-4 py-5 font-display font-bold text-[15px] text-ink sm:text-[16px]">
                     Data apa yang dibutuhkan untuk top up {game.name}?
                   </summary>
                   <p className="pb-6 text-[14px] leading-relaxed text-grey">Cukup {game.user_id_label}{game.server ? ` dan ${game.serverLabel}` : ""}. LOOTNEXA tidak pernah meminta password, OTP, atau akses login akun game.</p>
                 </details>
                 <details className="faq border-b border-line">
-                  <summary className="cursor-pointer list-none flex items-center justify-between gap-4 py-5 font-display font-bold text-[15px] sm:text-[16px]">
+                  <summary className="cursor-pointer list-none flex items-center justify-between gap-4 py-5 font-display font-bold text-[15px] text-ink sm:text-[16px]">
                     Bagaimana cara membayar?
                   </summary>
                   <p className="pb-6 text-[14px] leading-relaxed text-grey">Pembayaran memakai QRIS, yang bisa dibayar dari hampir semua e-wallet dan m-banking di Indonesia.</p>

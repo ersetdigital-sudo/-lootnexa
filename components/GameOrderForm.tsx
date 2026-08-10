@@ -225,37 +225,22 @@ export function GameOrderForm({ game, qrisUrl, waNumber, nominals, passes }: Gam
         </div>
       </div>
 
-      <div className="card rounded-3xl p-5 sm:p-6 lg:sticky lg:top-24">
-        <h3 className="font-display text-[15px] font-bold">Ringkasan Pesanan</h3>
-        <div className="mt-5 rounded-2xl border border-line bg-white p-3 flex items-center gap-3">
-          <div className="h-11 w-11 rounded-lg bg-line/50" />
-          <div>
-            <p className="text-[14px] font-semibold">{game.name}</p>
-            <p className="text-[12px] text-grey">{game.range} {game.cur}</p>
+      <div className="fixed inset-x-0 bottom-0 z-[90] bg-gradient-to-t from-paper via-paper/95 to-transparent px-4 pb-4 pt-8 sm:px-8 sm:pb-6">
+        <div className="mx-auto flex max-w-3xl items-center gap-3 rounded-[26px] p-2.5" style={{ background: "linear-gradient(90deg,#FF9C45 0%,#FF5A1F 100%)", boxShadow: "0 10px 25px -5px rgba(255,90,31,.45)" }}>
+          <div className="min-w-0 flex-1 px-2 text-left">
+            <p className="text-[10px] font-semibold uppercase tracking-[.15em] text-white/75">Total</p>
+            <p className="truncate font-display text-lg font-extrabold leading-tight text-white">{current ? rupiah(current.price) : "Rp0"}</p>
           </div>
+          <button
+            type="button"
+            onClick={handleCheckout}
+            disabled={!userId || userId.length < 4 || !current}
+            className="shrink-0 rounded-[20px] bg-white px-5 py-3.5 text-sm font-bold transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+            style={{ color: "#FF5A1F" }}
+          >
+            Bayar Sekarang
+          </button>
         </div>
-        <dl className="mt-5 space-y-3 text-[13.5px]">
-          <div className="flex justify-between gap-4"><dt className="text-grey">{game.user_id_label}</dt><dd className="font-medium text-ink/70">{userId || "—"}</dd></div>
-          {game.server && <div className="flex justify-between gap-4"><dt className="text-grey">{game.serverLabel}</dt><dd className="font-medium text-ink/70">{serverId || "—"}</dd></div>}
-          <div className="flex justify-between gap-4"><dt className="text-grey">Nominal</dt><dd className="font-medium text-ink/70">{current?.label || "—"}</dd></div>
-          <div className="flex justify-between gap-4"><dt className="text-grey">Harga</dt><dd className="font-medium text-ink/70">{current ? rupiah(current.price) : "—"}</dd></div>
-          <div className="flex justify-between gap-4"><dt className="text-grey">Biaya layanan</dt><dd className="font-medium text-ink/70">Rp0</dd></div>
-          <div className="flex justify-between gap-4"><dt className="text-grey">Pembayaran</dt><dd className="font-medium text-ink/70">QRIS</dd></div>
-        </dl>
-        <div className="h-px bg-line my-5" />
-        <div className="flex items-end justify-between">
-          <p className="text-[13px] text-grey">Total pembayaran</p>
-          <p className="font-display text-[26px] font-extrabold">{current ? rupiah(current.price) : "Rp0"}</p>
-        </div>
-        <button
-          type="button"
-          onClick={handleCheckout}
-          disabled={!userId || userId.length < 4 || !current}
-          className="btn btn-primary mt-6 w-full text-[15px] disabled:opacity-40 disabled:cursor-not-allowed"
-        >
-          Bayar Sekarang
-        </button>
-        <p className="mt-4 text-[11.5px] leading-relaxed text-grey">Harga yang tercantum sudah final tanpa biaya tambahan.</p>
       </div>
 
       {showCheckout && current && (

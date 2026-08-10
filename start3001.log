@@ -1,0 +1,12 @@
+
+> lootnexa-next@0.1.0 start
+> next start -p 3001
+
+▲ Next.js 16.3.0
+- Local:         http://localhost:3001
+- Network:       http://192.168.0.100:3001
+✓ Ready in 147ms
+⚠ Warning: Next.js ignored package-lock.json in C:\Users\TikTok Live\Downloads\pixo because it is outside the current Git repository (C:\Users\TikTok Live\Downloads\pixo\lootnexa).
+ To use this directory, set `outputFileTracingRoot` in your Next.js config.
+
+✓ Running next.config.ts took 32ms
