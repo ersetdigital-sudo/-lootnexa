@@ -123,17 +123,24 @@ export function CheckoutOverlay({ order, onClose }: CheckoutOverlayProps) {
               <div className="border-t border-line pt-3 flex justify-between items-center"><span className="text-grey">Total</span><span className="font-display text-xl font-bold accent">{rupiah(order.total)}</span></div>
             </div>
 
-            <div className="mt-4 rounded-2xl border border-[#39e5b6]/40 bg-[rgba(57,229,182,.06)] p-4 text-left">
-              <p className="text-xs font-bold text-[#39e5b6]">Sudah bayar tapi item belum masuk?</p>
-              <p className="mt-0.5 text-[11px] leading-relaxed text-grey">
-                Klik tombol di bawah untuk konfirmasi pembayaran via WhatsApp ke admin.
-              </p>
+            <div className="mt-4 rounded-2xl border border-[#39e5b6]/40 bg-[rgba(57,229,182,.06)] p-4 md:flex md:items-center md:gap-4">
+              <div className="hidden md:grid md:shrink-0 md:h-11 md:w-11 md:place-items-center md:rounded-xl md:bg-[rgba(57,229,182,.15)]">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#39e5b6" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" />
+                </svg>
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-xs font-bold text-[#39e5b6]">Sudah bayar tapi item belum masuk?</p>
+                <p className="mt-0.5 text-[11px] leading-relaxed text-grey">
+                  Klik tombol di bawah untuk konfirmasi pembayaran via WhatsApp ke admin.
+                </p>
+              </div>
               {waUrl ? (
                 <a
                   href={waUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl bg-[rgba(57,229,182,.15)] py-2.5 text-xs font-bold text-[#39e5b6] transition hover:bg-[rgba(57,229,182,.25)]"
+                  className="mt-3 md:mt-0 flex w-full md:w-auto shrink-0 items-center justify-center gap-2 rounded-xl bg-[rgba(57,229,182,.15)] px-5 py-2.5 text-xs font-bold text-[#39e5b6] transition hover:bg-[rgba(57,229,182,.25)]"
                 >
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" className="shrink-0">
                     <path d="M12 2a10 10 0 00-8.5 15.3L2 22l4.9-1.4A10 10 0 1012 2zm0 18.2a8.2 8.2 0 01-4.2-1.2l-.3-.2-2.9.8.8-2.8-.2-.3A8.2 8.2 0 1112 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.5.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 01-3.3-2.9c-.3-.4 0-.5.2-.7l.4-.5c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.5-.4h-.5a1 1 0 00-.7.3c-.2.2-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.7 4.3 3.8 1.6.7 2.2.8 3 .6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.3-.2-.5-.3z" />
@@ -141,7 +148,7 @@ export function CheckoutOverlay({ order, onClose }: CheckoutOverlayProps) {
                   Konfirmasi Pembayaran
                 </a>
               ) : (
-                <p className="mt-2 text-[11px] text-grey">Nomor WhatsApp belum diatur admin. Hubungi admin untuk bantuan.</p>
+                <p className="mt-2 md:mt-0 md:max-w-[200px] shrink-0 text-[11px] text-grey">Nomor WhatsApp belum diatur admin. Hubungi admin untuk bantuan.</p>
               )}
             </div>
 
